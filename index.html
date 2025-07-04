@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Five</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation buttons - positioned on each section */
+        .nav-btn {
+            background: linear-gradient(135deg, #ffb74d, #ffa726);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 183, 77, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 183, 77, 0.4);
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: 8rem;
+            font-weight: 900;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+            line-height: 0.9;
+            letter-spacing: -0.05em;
+        }
+
+        .hero-subtitle {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            color: #333;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Dino character */
+        .dino-character {
+            position: absolute;
+            bottom: 50px;
+            right: 150px;
+            z-index: 100;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .dino-img {
+            width: 200px;
+            height: 200px;
+            background: url('img/dino.png') no-repeat center;
+            background-size: contain;
+            margin-bottom: 10px;
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            padding: 10px 15px;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Floating elements */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .heart:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 80%; top: 30%; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 20%; top: 70%; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 70%; top: 80%; animation-delay: 1s; }
+
+        /* May Section */
+        .may-section {
+            background: linear-gradient(135deg, #ffb74d, #ffa726, #ff9800);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .content-text {
+            color: white;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-image {
+            width: 100%;
+            max-width: 350px; /* Bisa diatur sesuai kebutuhan */
+            padding: 10px;
+            border: 3px dashed white;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-left: 70px;
+        }
+
+        .content-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px; /* radius dalam gambar */
+            object-fit: contain;
+        }
+
+
+        .content-image-text {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Happy Five Section */
+        .happy-section {
+            background: linear-gradient(135deg, #ffb74d, #ffa726, #ff9800);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .memory-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .memory-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed white;
+        }
+
+        .memory-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .memory-text {
+            color: white;
+            opacity: 0.9;
+        }
+
+        /* Love U Section */
+        .love-section {
+            background: linear-gradient(135deg, #ffb74d, #ffa726, #ff9800);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 40px;
+        }
+
+        .love-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .love-title {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .love-message {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .love-image {
+            width: 400px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed white;
+        }
+
+        .hpfv {
+            font-weight: bold;
+            font-size: larger;
+        }
+
+        .hpfv-txt {
+            text-align: justify;
+            font-weight: 100;
+        }
+
+        .floating-navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: rgba(255, 183, 77, 0.95);
+            padding: 12px 32px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(8px);
+        }
+
+        .floating-navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .floating-navbar a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .floating-navbar a:hover,
+        .floating-navbar a.active {
+            color: #333;
+        }
+
+        .music-cover {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .music-controls {
+            margin-top: 10px;
+        }
+
+        .music-controls button {
+            background: #fcb54b;
+            border: none;
+            font-size: 1.2rem;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+        }
+
+        .music-controls input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Tambahan untuk player musik */
+        .music-player {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .music-cover-img {
+        border-radius: 20px;
+        margin-bottom: 1rem;
+        max-width: 280px;
+        width: 100%;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .music-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+        color: white;
+        }
+
+        .music-artist {
+        font-size: 1rem;
+        color: #f0f0f0;
+        margin-bottom: 1rem;
+        }
+
+        .music-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        }
+
+        .play-btn {
+        background-color: #2196F3;
+        border: none;
+        padding: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        transition: background 0.3s ease;
+        }
+
+        .play-btn:hover {
+        background-color: #1976D2;
+        }
+
+        #progressBar {
+        width: 80%;
+        height: 6px;
+        border-radius: 5px;
+        appearance: none;
+        background: #ccc;
+        outline: none;
+        }
+
+        #progressBar::-webkit-slider-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #2196F3;
+        cursor: pointer;
+        }
+
+        .photo-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        }
+
+        .photo-side {
+        width: 300px;
+        }
+
+        .side-img {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        border: 3px dashed white;
+        }
+
+        .mekungkum {
+            text-align: justify;
+        }
+        
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                right: 15px;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .dino-character {
+                right: 20px;
+                bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .love-title {
+                font-size: 2.5rem;
+            }
+            
+            .love-message {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Floating Top Navbar -->
+    <nav class="floating-navbar">
+        <ul>
+            <li><a href="#may">May</a></li>
+            <li><a href="#happy">Happy Five</a></li>
+            <li><a href="#love">Love U</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-hearts">
+            <div class="heart">💕</div>
+            <div class="heart">💖</div>
+            <div class="heart">💝</div>
+            <div class="heart">💗</div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Happy<br>Five</h1>
+            <br>
+            <h2 class="hero-subtitle">Special for 731 Days Together</h2>
+            <p class="hero-description">I Love You</p>
+        </div>
+
+        <!-- Dino Character -->
+        <div class="dino-character">
+            <div class="speech-bubble">Turun kebawahhh, Klik "May"</div>
+            <div class="dino-img"></div>
+        </div>
+    </section>
+
+    <!-- May Section -->
+    <section id="may" class="may-section">
+        <div class="section-container">
+            <h2 class="section-title"></h2>
+            <div class="content-grid">
+                <div class="content-text">
+                    <p class="hpfv">Happy Fiveee #24</p>
+                    <br>
+                    <p class="hpfv-txt">Happy Five yang ke 24x nya gemayyyku cantikku gumuhsh, seneng banget bisa bareng bareng sampe sejauh ini, gak nyangka udah melewati 731 hari dari 5 Kuli 2023, hujan badai dilewati bersama aku sayang mamay lebih dari apa yang dikira itu, I Love U may, kalo selama ini sering ngeselin dan dimarahin itu gak sengaja aowkakawk dan dibalik itu sebenernya aku sayang banget lebih dari may, semoga kedepannya makin upgrade diri satu sama lain makin baik dalam menjalin hubungannya dan makin erat, Makasih udah bertahan, udah sabar (tapi masih sabaran aku), udah nemenin aku sampai hari ini. Woff U. Aku mau kita terus belajar jadi pasangan yang saling menguatkan, bukan saling merendahkan. Semoga tahun depan lulus bareng mayy Aamiin, Lov u mamay happy five happy 731 days</p>
+                </div>
+                <div class="content-image">
+                    <img src="img/may1.jpg" alt="Foto kami"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Happy Five Section -->
+    <section id="happy" class="happy-section">
+        <div class="section-container">
+            <h2 class="section-title">Happy Five 🧡</h2>
+            <div class="memories-grid">
+               <div class="photo-row">
+                <!-- Kiri -->
+                <div class="memory-card photo-side">
+                    <img src="img/may3.jpg" alt="Foto Kiri" class="side-img">
+                    <h3>Dimana Semua Dimulai</h3>
+                    <p class="mekungkum">Ini pas nembak dulu tanggal 5 Juli 2023 masih malu-malu, aku kaku nembaknya awokawaok tapi untung dapet mayynya, ditemani kucing yang pas itu aku panggil badak</p>
+                </div>
+                <div class="memory-card music-player">
+                <img src="img/may5.jpg" alt="Album Art" class="music-cover-img" />
+                
+                <h3 class="music-title">Best Part</h3>
+                <p class="music-artist">Daniel Caesar feat. H.E.R.</p>
+
+                <audio id="audioPlayer" src="song/bestpart.mp3"></audio>
+
+                <div class="music-controls">
+                    <button id="playPauseBtn" class="play-btn">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    </button>
+                    <input type="range" id="progressBar" value="0" />
+                </div>
+                </div>
+                <!-- Kanan -->
+                <div class="memory-card photo-side">
+                    <img src="img/may4.jpg" alt="Foto Kanan" class="side-img">
+                    <h3>Momen Bahagia</h3>
+                    <p class="mekungkum">Tawa dan senyum saat ini itu dipawon jinawi tempat yang menjadi saksi perjalan hubungan kita dimulai, 5 Juli 2023 and still counting <3 </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love U Section -->
+    <section id="love" class="love-section">
+        <div class="section-container">
+            <div class="love-content">
+                <h2 class="love-title">Love U More More and More💖</h2>
+                 <!-- Dino kuning -->
+                <div class="dino-beside">
+                    <img src="img/dino2.png" alt="Dino Kuning"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.floating-navbar a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add active state to navigation buttons
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navButtons = document.querySelectorAll('.nav-btn');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href').includes(current)) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
+        // Add parallax effect to floating hearts
+        window.addEventListener('scroll', () => {
+            const hearts = document.querySelectorAll('.heart');
+            const scrolled = window.pageYOffset;
+            
+            hearts.forEach((heart, index) => {
+                const rate = scrolled * -0.5 * (index + 1);
+                heart.style.transform = `translateY(${rate}px)`;
+            });
+        });
+
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playPauseBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+            audio.play();
+            playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+            } else {
+            audio.pause();
+            playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M8 5v14l11-7z"/></svg>`;
+            }
+            isPlaying = !isPlaying;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = percent;
+        });
+
+        progressBar.addEventListener('input', () => {
+            const seekTime = (progressBar.value / 100) * audio.duration;
+            audio.currentTime = seekTime;
+        });
+    </script>
+</body>
+</html>
